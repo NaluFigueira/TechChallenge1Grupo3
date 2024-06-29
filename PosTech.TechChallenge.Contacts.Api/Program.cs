@@ -1,6 +1,8 @@
 using PosTech.TechChallenge.Contacts.Api;
 using PosTech.TechChallenge.Contacts.Api.Configuration;
 
+using Prometheus;
+
 var builder = WebApplication.CreateBuilder(args);
 var configurationBuilder = new ConfigurationBuilder();
 #if DEBUG
@@ -19,8 +21,12 @@ startup.ConfigureServices(builder.Services);
 var app = builder.Build();
 startup.Configure(app);
 app.ApplyMigrations();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapContactEndpoints();
 app.MapUserEndpoints();
 app.MapAuthenticationEndpoints();
+app.MapMetrics();
 
 app.Run();

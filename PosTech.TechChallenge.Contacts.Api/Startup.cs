@@ -13,6 +13,8 @@ using PosTech.TechChallenge.Contacts.Infra;
 
 using PosTech.TechChallenge.Contacts.Infra.Context;
 
+using Prometheus;
+
 namespace PosTech.TechChallenge.Contacts.Api;
 public class Startup
 {
@@ -61,6 +63,6 @@ public class Startup
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseHttpsRedirection();
-
+        app.UseHttpMetrics();
     }
 }

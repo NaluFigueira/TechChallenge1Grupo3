@@ -45,3 +45,23 @@ services:
       /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P S3cur3P@ssW0rd -d master -i docker-entrypoint-initdb.d/init.sql;
       echo "All done!";
       '
+  prometheus:
+    image: ubuntu/prometheus
+    container_name: dev_prometheus
+    depends_on:
+      - api
+    ports:
+      - "30090:9090"
+    environment:
+      - TZ=UTC
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana
+    container_name: dev_grafana
+    depends_on:
+      - api
+    ports:
+      - "30091:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
